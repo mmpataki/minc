@@ -1,0 +1,168 @@
+Grammar
+
+    0 $accept: declaration $end
+
+    1 declaration: type array_refs
+
+    2 array_refs: array_ref ',' array_refs
+    3           | array_ref
+
+    4 array_ref: ID pars
+
+    5 pars: %empty
+    6     | pars '[' NUM ']'
+
+    7 type: INT
+    8     | CHAR
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+',' (44) 2
+'[' (91) 6
+']' (93) 6
+error (256)
+NUM (258) 6
+ID (259) 4
+INT (260) 7
+CHAR (261) 8
+
+
+Nonterminals, with rules where they appear
+
+$accept (10)
+    on left: 0
+declaration (11)
+    on left: 1, on right: 0
+array_refs (12)
+    on left: 2 3, on right: 1 2
+array_ref (13)
+    on left: 4, on right: 2 3
+pars (14)
+    on left: 5 6, on right: 4 6
+type (15)
+    on left: 7 8, on right: 1
+
+
+State 0
+
+    0 $accept: . declaration $end
+
+    INT   shift, and go to state 1
+    CHAR  shift, and go to state 2
+
+    declaration  go to state 3
+    type         go to state 4
+
+
+State 1
+
+    7 type: INT .
+
+    $default  reduce using rule 7 (type)
+
+
+State 2
+
+    8 type: CHAR .
+
+    $default  reduce using rule 8 (type)
+
+
+State 3
+
+    0 $accept: declaration . $end
+
+    $end  shift, and go to state 5
+
+
+State 4
+
+    1 declaration: type . array_refs
+
+    ID  shift, and go to state 6
+
+    array_refs  go to state 7
+    array_ref   go to state 8
+
+
+State 5
+
+    0 $accept: declaration $end .
+
+    $default  accept
+
+
+State 6
+
+    4 array_ref: ID . pars
+
+    $default  reduce using rule 5 (pars)
+
+    pars  go to state 9
+
+
+State 7
+
+    1 declaration: type array_refs .
+
+    $default  reduce using rule 1 (declaration)
+
+
+State 8
+
+    2 array_refs: array_ref . ',' array_refs
+    3           | array_ref .
+
+    ','  shift, and go to state 10
+
+    $default  reduce using rule 3 (array_refs)
+
+
+State 9
+
+    4 array_ref: ID pars .
+    6 pars: pars . '[' NUM ']'
+
+    '['  shift, and go to state 11
+
+    $default  reduce using rule 4 (array_ref)
+
+
+State 10
+
+    2 array_refs: array_ref ',' . array_refs
+
+    ID  shift, and go to state 6
+
+    array_refs  go to state 12
+    array_ref   go to state 8
+
+
+State 11
+
+    6 pars: pars '[' . NUM ']'
+
+    NUM  shift, and go to state 13
+
+
+State 12
+
+    2 array_refs: array_ref ',' array_refs .
+
+    $default  reduce using rule 2 (array_refs)
+
+
+State 13
+
+    6 pars: pars '[' NUM . ']'
+
+    ']'  shift, and go to state 14
+
+
+State 14
+
+    6 pars: pars '[' NUM ']' .
+
+    $default  reduce using rule 6 (pars)

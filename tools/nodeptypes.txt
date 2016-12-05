@@ -1,0 +1,32 @@
+function
+statements
+break
+if
+call
+aparams
+fparams
+for
+while
+switch
+case
+return
+plus +
+minus -
+multiply *
+divide /
+gt >
+lt <
+le <=
+ge >=
+ee ==
+ne !=
+and &&
+amp &
+or ||
+not !
+eq =
+incop ++
+decop --
+pointer *
+arac []
+arr [...]

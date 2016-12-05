@@ -1,0 +1,2561 @@
+Terminals unused in grammar
+
+   STRUCT
+   UNION
+   CONTINUE
+   C_LIT
+
+
+State 68 conflicts: 1 shift/reduce
+State 107 conflicts: 1 shift/reduce
+State 130 conflicts: 1 shift/reduce
+State 131 conflicts: 1 shift/reduce
+State 132 conflicts: 1 shift/reduce
+State 137 conflicts: 1 shift/reduce
+State 140 conflicts: 1 shift/reduce
+State 141 conflicts: 1 shift/reduce
+State 148 conflicts: 1 shift/reduce
+State 152 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: cprogram
+
+    2 cprogram: %empty
+    3         | cprogram declarations
+    4         | cprogram function
+
+    5 declarations: vdeclaration
+    6             | fdeclaration
+
+    7 identifier: IDENTIFIER
+
+    8 fdeclaration: datatype identifier OP fparamlist CP
+
+    9 function: datatype identifier OP fparamlist CP block
+
+   10 statement_list: %empty
+   11               | statement_list statement
+   12               | statement_list declarations SEMICOLON
+
+   13 conditional: iexp
+   14            | c_switch
+
+   15 statement: expression SEMICOLON
+   16          | RETURN expression SEMICOLON
+   17          | BREAK SEMICOLON
+   18          | assign SEMICOLON
+   19          | loops
+   20          | block
+   21          | conditional
+
+   22 block: OB statement_list CB
+
+   23 iexp: IF OP expression CP statement eiexp
+
+   24 eiexp: %empty
+   25      | ELSE statement
+
+   26 funcall: identifier OP actarguments CP
+
+   27 actarguments: expression
+   28             | expression COMMA actarguments
+
+   29 fsdecl: datatype identifier
+
+   30 fparamlist: %empty
+   31           | fsdecl
+   32           | fsdecl COMMA fparamlist
+
+   33 loops: for_loop
+   34      | while_loop
+
+   35 exp_hack: expression
+   36         | assign
+
+   37 for_loop: FOR OP exp_hack SEMICOLON exp_hack SEMICOLON exp_hack CP statement
+
+   38 while_loop: WHILE OP expression CP statement
+
+   39 c_switch: SWITCH OP expression CP OB switch_body CB
+
+   40 switch_body: %empty
+   41            | switch_body CASE aconst COLON statement_list
+
+   42 aconst: NUMBER
+
+   43 datatype: INT
+   44         | CHAR
+
+   45 constant: S_LIT
+   46         | aconst
+
+   47 expression: %empty
+   48           | expression PLUS expression
+   49           | expression MINUS expression
+   50           | expression MUL expression
+   51           | expression DIV expression
+   52           | expression GT expression
+   53           | expression LT expression
+   54           | expression LE expression
+   55           | expression GE expression
+   56           | expression EE expression
+   57           | expression NE expression
+   58           | expression AND expression
+   59           | expression OR expression
+   60           | identifier INCOP
+   61           | identifier DECOP
+   62           | NOT expression
+   63           | AMP identifier
+   64           | funcall
+   65           | identifier arrsize
+   66           | constant
+   67           | OP expression CP
+
+   68 assign: identifier EQ expression
+   69       | pointer_expression EQ expression
+
+   70 pointer_expression: MUL identifier
+
+   71 vdeclaration: datatype list
+
+   72 list: list COMMA sdecl
+   73     | sdecl
+
+   74 arrsize: %empty
+   75        | OSB constant CSB
+
+   76 sdecl: identifier arrsize
+   77      | identifier arrsize EQ expression
+   78      | pointer_expression arrsize
+   79      | pointer_expression arrsize EQ expression
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+INT (258) 43
+CHAR (259) 44
+STRUCT (260)
+UNION (261)
+FOR (262) 37
+WHILE (263) 38
+IF (264) 23
+ELSE (265) 25
+SWITCH (266) 39
+CASE (267) 41
+BREAK (268) 17
+CONTINUE (269)
+RETURN (270) 16
+IDENTIFIER (271) 7
+NUMBER (272) 42
+PLUS (273) 48
+MINUS (274) 49
+MUL (275) 50 70
+DIV (276) 51
+LE (277) 54
+GE (278) 55
+LT (279) 53
+GT (280) 52
+EE (281) 56
+NE (282) 57
+AMP (283) 63
+AND (284) 58
+OR (285) 59
+NOT (286) 62
+COLON (287) 41
+EQ (288) 68 69 77 79
+COMMA (289) 28 32 72
+OSB (290) 75
+CSB (291) 75
+OB (292) 22 39
+CB (293) 22 39
+OP (294) 8 9 23 26 37 38 39 67
+CP (295) 8 9 23 26 37 38 39 67
+SEMICOLON (296) 12 15 16 17 18 37
+S_LIT (297) 45
+C_LIT (298)
+INCOP (299) 60
+DECOP (300) 61
+
+
+Nonterminals, with rules where they appear
+
+$accept (46)
+    on left: 0
+program (47)
+    on left: 1, on right: 0
+cprogram (48)
+    on left: 2 3 4, on right: 1 3 4
+declarations (49)
+    on left: 5 6, on right: 3 12
+identifier (50)
+    on left: 7, on right: 8 9 26 29 60 61 63 65 68 70 76 77
+fdeclaration (51)
+    on left: 8, on right: 6
+function (52)
+    on left: 9, on right: 4
+statement_list (53)
+    on left: 10 11 12, on right: 11 12 22 41
+conditional (54)
+    on left: 13 14, on right: 21
+statement (55)
+    on left: 15 16 17 18 19 20 21, on right: 11 23 25 37 38
+block (56)
+    on left: 22, on right: 9 20
+iexp (57)
+    on left: 23, on right: 13
+eiexp (58)
+    on left: 24 25, on right: 23
+funcall (59)
+    on left: 26, on right: 64
+actarguments (60)
+    on left: 27 28, on right: 26 28
+fsdecl (61)
+    on left: 29, on right: 31 32
+fparamlist (62)
+    on left: 30 31 32, on right: 8 9 32
+loops (63)
+    on left: 33 34, on right: 19
+exp_hack (64)
+    on left: 35 36, on right: 37
+for_loop (65)
+    on left: 37, on right: 33
+while_loop (66)
+    on left: 38, on right: 34
+c_switch (67)
+    on left: 39, on right: 14
+switch_body (68)
+    on left: 40 41, on right: 39 41
+aconst (69)
+    on left: 42, on right: 41 46
+datatype (70)
+    on left: 43 44, on right: 8 9 29 71
+constant (71)
+    on left: 45 46, on right: 66 75
+expression (72)
+    on left: 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64
+    65 66 67, on right: 15 16 23 27 28 35 38 39 48 49 50 51 52 53 54
+    55 56 57 58 59 62 67 68 69 77 79
+assign (73)
+    on left: 68 69, on right: 18 36
+pointer_expression (74)
+    on left: 70, on right: 69 78 79
+vdeclaration (75)
+    on left: 71, on right: 5
+list (76)
+    on left: 72 73, on right: 71 72
+arrsize (77)
+    on left: 74 75, on right: 65 76 77 78 79
+sdecl (78)
+    on left: 76 77 78 79, on right: 72 73
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 2 (cprogram)
+
+    program   go to state 1
+    cprogram  go to state 2
+
+
+State 1
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    1 program: cprogram .
+    3 cprogram: cprogram . declarations
+    4         | cprogram . function
+
+    INT   shift, and go to state 4
+    CHAR  shift, and go to state 5
+
+    $default  reduce using rule 1 (program)
+
+    declarations  go to state 6
+    fdeclaration  go to state 7
+    function      go to state 8
+    datatype      go to state 9
+    vdeclaration  go to state 10
+
+
+State 3
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 4
+
+   43 datatype: INT .
+
+    $default  reduce using rule 43 (datatype)
+
+
+State 5
+
+   44 datatype: CHAR .
+
+    $default  reduce using rule 44 (datatype)
+
+
+State 6
+
+    3 cprogram: cprogram declarations .
+
+    $default  reduce using rule 3 (cprogram)
+
+
+State 7
+
+    6 declarations: fdeclaration .
+
+    $default  reduce using rule 6 (declarations)
+
+
+State 8
+
+    4 cprogram: cprogram function .
+
+    $default  reduce using rule 4 (cprogram)
+
+
+State 9
+
+    8 fdeclaration: datatype . identifier OP fparamlist CP
+    9 function: datatype . identifier OP fparamlist CP block
+   71 vdeclaration: datatype . list
+
+    IDENTIFIER  shift, and go to state 11
+    MUL         shift, and go to state 12
+
+    identifier          go to state 13
+    pointer_expression  go to state 14
+    list                go to state 15
+    sdecl               go to state 16
+
+
+State 10
+
+    5 declarations: vdeclaration .
+
+    $default  reduce using rule 5 (declarations)
+
+
+State 11
+
+    7 identifier: IDENTIFIER .
+
+    $default  reduce using rule 7 (identifier)
+
+
+State 12
+
+   70 pointer_expression: MUL . identifier
+
+    IDENTIFIER  shift, and go to state 11
+
+    identifier  go to state 17
+
+
+State 13
+
+    8 fdeclaration: datatype identifier . OP fparamlist CP
+    9 function: datatype identifier . OP fparamlist CP block
+   76 sdecl: identifier . arrsize
+   77      | identifier . arrsize EQ expression
+
+    OSB  shift, and go to state 18
+    OP   shift, and go to state 19
+
+    $default  reduce using rule 74 (arrsize)
+
+    arrsize  go to state 20
+
+
+State 14
+
+   78 sdecl: pointer_expression . arrsize
+   79      | pointer_expression . arrsize EQ expression
+
+    OSB  shift, and go to state 18
+
+    $default  reduce using rule 74 (arrsize)
+
+    arrsize  go to state 21
+
+
+State 15
+
+   71 vdeclaration: datatype list .
+   72 list: list . COMMA sdecl
+
+    COMMA  shift, and go to state 22
+
+    $default  reduce using rule 71 (vdeclaration)
+
+
+State 16
+
+   73 list: sdecl .
+
+    $default  reduce using rule 73 (list)
+
+
+State 17
+
+   70 pointer_expression: MUL identifier .
+
+    $default  reduce using rule 70 (pointer_expression)
+
+
+State 18
+
+   75 arrsize: OSB . constant CSB
+
+    NUMBER  shift, and go to state 23
+    S_LIT   shift, and go to state 24
+
+    aconst    go to state 25
+    constant  go to state 26
+
+
+State 19
+
+    8 fdeclaration: datatype identifier OP . fparamlist CP
+    9 function: datatype identifier OP . fparamlist CP block
+
+    INT   shift, and go to state 4
+    CHAR  shift, and go to state 5
+
+    $default  reduce using rule 30 (fparamlist)
+
+    fsdecl      go to state 27
+    fparamlist  go to state 28
+    datatype    go to state 29
+
+
+State 20
+
+   76 sdecl: identifier arrsize .
+   77      | identifier arrsize . EQ expression
+
+    EQ  shift, and go to state 30
+
+    $default  reduce using rule 76 (sdecl)
+
+
+State 21
+
+   78 sdecl: pointer_expression arrsize .
+   79      | pointer_expression arrsize . EQ expression
+
+    EQ  shift, and go to state 31
+
+    $default  reduce using rule 78 (sdecl)
+
+
+State 22
+
+   72 list: list COMMA . sdecl
+
+    IDENTIFIER  shift, and go to state 11
+    MUL         shift, and go to state 12
+
+    identifier          go to state 32
+    pointer_expression  go to state 14
+    sdecl               go to state 33
+
+
+State 23
+
+   42 aconst: NUMBER .
+
+    $default  reduce using rule 42 (aconst)
+
+
+State 24
+
+   45 constant: S_LIT .
+
+    $default  reduce using rule 45 (constant)
+
+
+State 25
+
+   46 constant: aconst .
+
+    $default  reduce using rule 46 (constant)
+
+
+State 26
+
+   75 arrsize: OSB constant . CSB
+
+    CSB  shift, and go to state 34
+
+
+State 27
+
+   31 fparamlist: fsdecl .
+   32           | fsdecl . COMMA fparamlist
+
+    COMMA  shift, and go to state 35
+
+    $default  reduce using rule 31 (fparamlist)
+
+
+State 28
+
+    8 fdeclaration: datatype identifier OP fparamlist . CP
+    9 function: datatype identifier OP fparamlist . CP block
+
+    CP  shift, and go to state 36
+
+
+State 29
+
+   29 fsdecl: datatype . identifier
+
+    IDENTIFIER  shift, and go to state 11
+
+    identifier  go to state 37
+
+
+State 30
+
+   77 sdecl: identifier arrsize EQ . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 44
+
+
+State 31
+
+   79 sdecl: pointer_expression arrsize EQ . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 45
+
+
+State 32
+
+   76 sdecl: identifier . arrsize
+   77      | identifier . arrsize EQ expression
+
+    OSB  shift, and go to state 18
+
+    $default  reduce using rule 74 (arrsize)
+
+    arrsize  go to state 20
+
+
+State 33
+
+   72 list: list COMMA sdecl .
+
+    $default  reduce using rule 72 (list)
+
+
+State 34
+
+   75 arrsize: OSB constant CSB .
+
+    $default  reduce using rule 75 (arrsize)
+
+
+State 35
+
+   32 fparamlist: fsdecl COMMA . fparamlist
+
+    INT   shift, and go to state 4
+    CHAR  shift, and go to state 5
+
+    $default  reduce using rule 30 (fparamlist)
+
+    fsdecl      go to state 27
+    fparamlist  go to state 46
+    datatype    go to state 29
+
+
+State 36
+
+    8 fdeclaration: datatype identifier OP fparamlist CP .
+    9 function: datatype identifier OP fparamlist CP . block
+
+    OB  shift, and go to state 47
+
+    $default  reduce using rule 8 (fdeclaration)
+
+    block  go to state 48
+
+
+State 37
+
+   29 fsdecl: datatype identifier .
+
+    $default  reduce using rule 29 (fsdecl)
+
+
+State 38
+
+   63 expression: AMP . identifier
+
+    IDENTIFIER  shift, and go to state 11
+
+    identifier  go to state 49
+
+
+State 39
+
+   62 expression: NOT . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 50
+
+
+State 40
+
+   67 expression: OP . expression CP
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 51
+
+
+State 41
+
+   26 funcall: identifier . OP actarguments CP
+   60 expression: identifier . INCOP
+   61           | identifier . DECOP
+   65           | identifier . arrsize
+
+    OSB    shift, and go to state 18
+    OP     shift, and go to state 52
+    INCOP  shift, and go to state 53
+    DECOP  shift, and go to state 54
+
+    $default  reduce using rule 74 (arrsize)
+
+    arrsize  go to state 55
+
+
+State 42
+
+   64 expression: funcall .
+
+    $default  reduce using rule 64 (expression)
+
+
+State 43
+
+   66 expression: constant .
+
+    $default  reduce using rule 66 (expression)
+
+
+State 44
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   77 sdecl: identifier arrsize EQ expression .
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+
+    $default  reduce using rule 77 (sdecl)
+
+
+State 45
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   79 sdecl: pointer_expression arrsize EQ expression .
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+
+    $default  reduce using rule 79 (sdecl)
+
+
+State 46
+
+   32 fparamlist: fsdecl COMMA fparamlist .
+
+    $default  reduce using rule 32 (fparamlist)
+
+
+State 47
+
+   22 block: OB . statement_list CB
+
+    $default  reduce using rule 10 (statement_list)
+
+    statement_list  go to state 68
+
+
+State 48
+
+    9 function: datatype identifier OP fparamlist CP block .
+
+    $default  reduce using rule 9 (function)
+
+
+State 49
+
+   63 expression: AMP identifier .
+
+    $default  reduce using rule 63 (expression)
+
+
+State 50
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   62           | NOT expression .
+
+    $default  reduce using rule 62 (expression)
+
+
+State 51
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   67           | OP expression . CP
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+    CP     shift, and go to state 69
+
+
+State 52
+
+   26 funcall: identifier OP . actarguments CP
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier    go to state 41
+    funcall       go to state 42
+    actarguments  go to state 70
+    aconst        go to state 25
+    constant      go to state 43
+    expression    go to state 71
+
+
+State 53
+
+   60 expression: identifier INCOP .
+
+    $default  reduce using rule 60 (expression)
+
+
+State 54
+
+   61 expression: identifier DECOP .
+
+    $default  reduce using rule 61 (expression)
+
+
+State 55
+
+   65 expression: identifier arrsize .
+
+    $default  reduce using rule 65 (expression)
+
+
+State 56
+
+   48 expression: expression PLUS . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 72
+
+
+State 57
+
+   49 expression: expression MINUS . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 73
+
+
+State 58
+
+   50 expression: expression MUL . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 74
+
+
+State 59
+
+   51 expression: expression DIV . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 75
+
+
+State 60
+
+   54 expression: expression LE . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 76
+
+
+State 61
+
+   55 expression: expression GE . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 77
+
+
+State 62
+
+   53 expression: expression LT . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 78
+
+
+State 63
+
+   52 expression: expression GT . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 79
+
+
+State 64
+
+   56 expression: expression EE . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 80
+
+
+State 65
+
+   57 expression: expression NE . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 81
+
+
+State 66
+
+   58 expression: expression AND . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 82
+
+
+State 67
+
+   59 expression: expression OR . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 83
+
+
+State 68
+
+   11 statement_list: statement_list . statement
+   12               | statement_list . declarations SEMICOLON
+   22 block: OB statement_list . CB
+
+    INT         shift, and go to state 4
+    CHAR        shift, and go to state 5
+    FOR         shift, and go to state 84
+    WHILE       shift, and go to state 85
+    IF          shift, and go to state 86
+    SWITCH      shift, and go to state 87
+    BREAK       shift, and go to state 88
+    RETURN      shift, and go to state 89
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OB          shift, and go to state 47
+    CB          shift, and go to state 90
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    declarations        go to state 91
+    identifier          go to state 92
+    fdeclaration        go to state 7
+    conditional         go to state 93
+    statement           go to state 94
+    block               go to state 95
+    iexp                go to state 96
+    funcall             go to state 42
+    loops               go to state 97
+    for_loop            go to state 98
+    while_loop          go to state 99
+    c_switch            go to state 100
+    aconst              go to state 25
+    datatype            go to state 101
+    constant            go to state 43
+    expression          go to state 102
+    assign              go to state 103
+    pointer_expression  go to state 104
+    vdeclaration        go to state 10
+
+
+State 69
+
+   67 expression: OP expression CP .
+
+    $default  reduce using rule 67 (expression)
+
+
+State 70
+
+   26 funcall: identifier OP actarguments . CP
+
+    CP  shift, and go to state 105
+
+
+State 71
+
+   27 actarguments: expression .
+   28             | expression . COMMA actarguments
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+    COMMA  shift, and go to state 106
+
+    $default  reduce using rule 27 (actarguments)
+
+
+State 72
+
+   48 expression: expression . PLUS expression
+   48           | expression PLUS expression .
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    MUL  shift, and go to state 58
+    DIV  shift, and go to state 59
+    LE   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    GT   shift, and go to state 63
+    EE   shift, and go to state 64
+    NE   shift, and go to state 65
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 48 (expression)
+
+
+State 73
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   49           | expression MINUS expression .
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    MUL  shift, and go to state 58
+    DIV  shift, and go to state 59
+    LE   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    GT   shift, and go to state 63
+    EE   shift, and go to state 64
+    NE   shift, and go to state 65
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 49 (expression)
+
+
+State 74
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   50           | expression MUL expression .
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    LE   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    GT   shift, and go to state 63
+    EE   shift, and go to state 64
+    NE   shift, and go to state 65
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 50 (expression)
+
+
+State 75
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   51           | expression DIV expression .
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    LE   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    GT   shift, and go to state 63
+    EE   shift, and go to state 64
+    NE   shift, and go to state 65
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 51 (expression)
+
+
+State 76
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   54           | expression LE expression .
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 54 (expression)
+
+
+State 77
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   55           | expression GE expression .
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 55 (expression)
+
+
+State 78
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   53           | expression LT expression .
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 53 (expression)
+
+
+State 79
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   52           | expression GT expression .
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 52 (expression)
+
+
+State 80
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   56           | expression EE expression .
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 56 (expression)
+
+
+State 81
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   57           | expression NE expression .
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    $default  reduce using rule 57 (expression)
+
+
+State 82
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   58           | expression AND expression .
+   59           | expression . OR expression
+
+    $default  reduce using rule 58 (expression)
+
+
+State 83
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   59           | expression OR expression .
+
+    $default  reduce using rule 59 (expression)
+
+
+State 84
+
+   37 for_loop: FOR . OP exp_hack SEMICOLON exp_hack SEMICOLON exp_hack CP statement
+
+    OP  shift, and go to state 107
+
+
+State 85
+
+   38 while_loop: WHILE . OP expression CP statement
+
+    OP  shift, and go to state 108
+
+
+State 86
+
+   23 iexp: IF . OP expression CP statement eiexp
+
+    OP  shift, and go to state 109
+
+
+State 87
+
+   39 c_switch: SWITCH . OP expression CP OB switch_body CB
+
+    OP  shift, and go to state 110
+
+
+State 88
+
+   17 statement: BREAK . SEMICOLON
+
+    SEMICOLON  shift, and go to state 111
+
+
+State 89
+
+   16 statement: RETURN . expression SEMICOLON
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 112
+
+
+State 90
+
+   22 block: OB statement_list CB .
+
+    $default  reduce using rule 22 (block)
+
+
+State 91
+
+   12 statement_list: statement_list declarations . SEMICOLON
+
+    SEMICOLON  shift, and go to state 113
+
+
+State 92
+
+   26 funcall: identifier . OP actarguments CP
+   60 expression: identifier . INCOP
+   61           | identifier . DECOP
+   65           | identifier . arrsize
+   68 assign: identifier . EQ expression
+
+    EQ     shift, and go to state 114
+    OSB    shift, and go to state 18
+    OP     shift, and go to state 52
+    INCOP  shift, and go to state 53
+    DECOP  shift, and go to state 54
+
+    $default  reduce using rule 74 (arrsize)
+
+    arrsize  go to state 55
+
+
+State 93
+
+   21 statement: conditional .
+
+    $default  reduce using rule 21 (statement)
+
+
+State 94
+
+   11 statement_list: statement_list statement .
+
+    $default  reduce using rule 11 (statement_list)
+
+
+State 95
+
+   20 statement: block .
+
+    $default  reduce using rule 20 (statement)
+
+
+State 96
+
+   13 conditional: iexp .
+
+    $default  reduce using rule 13 (conditional)
+
+
+State 97
+
+   19 statement: loops .
+
+    $default  reduce using rule 19 (statement)
+
+
+State 98
+
+   33 loops: for_loop .
+
+    $default  reduce using rule 33 (loops)
+
+
+State 99
+
+   34 loops: while_loop .
+
+    $default  reduce using rule 34 (loops)
+
+
+State 100
+
+   14 conditional: c_switch .
+
+    $default  reduce using rule 14 (conditional)
+
+
+State 101
+
+    8 fdeclaration: datatype . identifier OP fparamlist CP
+   71 vdeclaration: datatype . list
+
+    IDENTIFIER  shift, and go to state 11
+    MUL         shift, and go to state 12
+
+    identifier          go to state 115
+    pointer_expression  go to state 14
+    list                go to state 15
+    sdecl               go to state 16
+
+
+State 102
+
+   15 statement: expression . SEMICOLON
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS       shift, and go to state 56
+    MINUS      shift, and go to state 57
+    MUL        shift, and go to state 58
+    DIV        shift, and go to state 59
+    LE         shift, and go to state 60
+    GE         shift, and go to state 61
+    LT         shift, and go to state 62
+    GT         shift, and go to state 63
+    EE         shift, and go to state 64
+    NE         shift, and go to state 65
+    AND        shift, and go to state 66
+    OR         shift, and go to state 67
+    SEMICOLON  shift, and go to state 116
+
+
+State 103
+
+   18 statement: assign . SEMICOLON
+
+    SEMICOLON  shift, and go to state 117
+
+
+State 104
+
+   69 assign: pointer_expression . EQ expression
+
+    EQ  shift, and go to state 118
+
+
+State 105
+
+   26 funcall: identifier OP actarguments CP .
+
+    $default  reduce using rule 26 (funcall)
+
+
+State 106
+
+   28 actarguments: expression COMMA . actarguments
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier    go to state 41
+    funcall       go to state 42
+    actarguments  go to state 119
+    aconst        go to state 25
+    constant      go to state 43
+    expression    go to state 71
+
+
+State 107
+
+   37 for_loop: FOR OP . exp_hack SEMICOLON exp_hack SEMICOLON exp_hack CP statement
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    funcall             go to state 42
+    exp_hack            go to state 120
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 121
+    assign              go to state 122
+    pointer_expression  go to state 104
+
+
+State 108
+
+   38 while_loop: WHILE OP . expression CP statement
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 123
+
+
+State 109
+
+   23 iexp: IF OP . expression CP statement eiexp
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 124
+
+
+State 110
+
+   39 c_switch: SWITCH OP . expression CP OB switch_body CB
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 125
+
+
+State 111
+
+   17 statement: BREAK SEMICOLON .
+
+    $default  reduce using rule 17 (statement)
+
+
+State 112
+
+   16 statement: RETURN expression . SEMICOLON
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS       shift, and go to state 56
+    MINUS      shift, and go to state 57
+    MUL        shift, and go to state 58
+    DIV        shift, and go to state 59
+    LE         shift, and go to state 60
+    GE         shift, and go to state 61
+    LT         shift, and go to state 62
+    GT         shift, and go to state 63
+    EE         shift, and go to state 64
+    NE         shift, and go to state 65
+    AND        shift, and go to state 66
+    OR         shift, and go to state 67
+    SEMICOLON  shift, and go to state 126
+
+
+State 113
+
+   12 statement_list: statement_list declarations SEMICOLON .
+
+    $default  reduce using rule 12 (statement_list)
+
+
+State 114
+
+   68 assign: identifier EQ . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 127
+
+
+State 115
+
+    8 fdeclaration: datatype identifier . OP fparamlist CP
+   76 sdecl: identifier . arrsize
+   77      | identifier . arrsize EQ expression
+
+    OSB  shift, and go to state 18
+    OP   shift, and go to state 128
+
+    $default  reduce using rule 74 (arrsize)
+
+    arrsize  go to state 20
+
+
+State 116
+
+   15 statement: expression SEMICOLON .
+
+    $default  reduce using rule 15 (statement)
+
+
+State 117
+
+   18 statement: assign SEMICOLON .
+
+    $default  reduce using rule 18 (statement)
+
+
+State 118
+
+   69 assign: pointer_expression EQ . expression
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    $default  reduce using rule 47 (expression)
+
+    identifier  go to state 41
+    funcall     go to state 42
+    aconst      go to state 25
+    constant    go to state 43
+    expression  go to state 129
+
+
+State 119
+
+   28 actarguments: expression COMMA actarguments .
+
+    $default  reduce using rule 28 (actarguments)
+
+
+State 120
+
+   37 for_loop: FOR OP exp_hack . SEMICOLON exp_hack SEMICOLON exp_hack CP statement
+
+    SEMICOLON  shift, and go to state 130
+
+
+State 121
+
+   35 exp_hack: expression .
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+
+    $default  reduce using rule 35 (exp_hack)
+
+
+State 122
+
+   36 exp_hack: assign .
+
+    $default  reduce using rule 36 (exp_hack)
+
+
+State 123
+
+   38 while_loop: WHILE OP expression . CP statement
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+    CP     shift, and go to state 131
+
+
+State 124
+
+   23 iexp: IF OP expression . CP statement eiexp
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+    CP     shift, and go to state 132
+
+
+State 125
+
+   39 c_switch: SWITCH OP expression . CP OB switch_body CB
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+    CP     shift, and go to state 133
+
+
+State 126
+
+   16 statement: RETURN expression SEMICOLON .
+
+    $default  reduce using rule 16 (statement)
+
+
+State 127
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   68 assign: identifier EQ expression .
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+
+    $default  reduce using rule 68 (assign)
+
+
+State 128
+
+    8 fdeclaration: datatype identifier OP . fparamlist CP
+
+    INT   shift, and go to state 4
+    CHAR  shift, and go to state 5
+
+    $default  reduce using rule 30 (fparamlist)
+
+    fsdecl      go to state 27
+    fparamlist  go to state 134
+    datatype    go to state 29
+
+
+State 129
+
+   48 expression: expression . PLUS expression
+   49           | expression . MINUS expression
+   50           | expression . MUL expression
+   51           | expression . DIV expression
+   52           | expression . GT expression
+   53           | expression . LT expression
+   54           | expression . LE expression
+   55           | expression . GE expression
+   56           | expression . EE expression
+   57           | expression . NE expression
+   58           | expression . AND expression
+   59           | expression . OR expression
+   69 assign: pointer_expression EQ expression .
+
+    PLUS   shift, and go to state 56
+    MINUS  shift, and go to state 57
+    MUL    shift, and go to state 58
+    DIV    shift, and go to state 59
+    LE     shift, and go to state 60
+    GE     shift, and go to state 61
+    LT     shift, and go to state 62
+    GT     shift, and go to state 63
+    EE     shift, and go to state 64
+    NE     shift, and go to state 65
+    AND    shift, and go to state 66
+    OR     shift, and go to state 67
+
+    $default  reduce using rule 69 (assign)
+
+
+State 130
+
+   37 for_loop: FOR OP exp_hack SEMICOLON . exp_hack SEMICOLON exp_hack CP statement
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    funcall             go to state 42
+    exp_hack            go to state 135
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 121
+    assign              go to state 122
+    pointer_expression  go to state 104
+
+
+State 131
+
+   38 while_loop: WHILE OP expression CP . statement
+
+    FOR         shift, and go to state 84
+    WHILE       shift, and go to state 85
+    IF          shift, and go to state 86
+    SWITCH      shift, and go to state 87
+    BREAK       shift, and go to state 88
+    RETURN      shift, and go to state 89
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OB          shift, and go to state 47
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    conditional         go to state 93
+    statement           go to state 136
+    block               go to state 95
+    iexp                go to state 96
+    funcall             go to state 42
+    loops               go to state 97
+    for_loop            go to state 98
+    while_loop          go to state 99
+    c_switch            go to state 100
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 102
+    assign              go to state 103
+    pointer_expression  go to state 104
+
+
+State 132
+
+   23 iexp: IF OP expression CP . statement eiexp
+
+    FOR         shift, and go to state 84
+    WHILE       shift, and go to state 85
+    IF          shift, and go to state 86
+    SWITCH      shift, and go to state 87
+    BREAK       shift, and go to state 88
+    RETURN      shift, and go to state 89
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OB          shift, and go to state 47
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    conditional         go to state 93
+    statement           go to state 137
+    block               go to state 95
+    iexp                go to state 96
+    funcall             go to state 42
+    loops               go to state 97
+    for_loop            go to state 98
+    while_loop          go to state 99
+    c_switch            go to state 100
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 102
+    assign              go to state 103
+    pointer_expression  go to state 104
+
+
+State 133
+
+   39 c_switch: SWITCH OP expression CP . OB switch_body CB
+
+    OB  shift, and go to state 138
+
+
+State 134
+
+    8 fdeclaration: datatype identifier OP fparamlist . CP
+
+    CP  shift, and go to state 139
+
+
+State 135
+
+   37 for_loop: FOR OP exp_hack SEMICOLON exp_hack . SEMICOLON exp_hack CP statement
+
+    SEMICOLON  shift, and go to state 140
+
+
+State 136
+
+   38 while_loop: WHILE OP expression CP statement .
+
+    $default  reduce using rule 38 (while_loop)
+
+
+State 137
+
+   23 iexp: IF OP expression CP statement . eiexp
+
+    ELSE  shift, and go to state 141
+
+    ELSE      [reduce using rule 24 (eiexp)]
+    $default  reduce using rule 24 (eiexp)
+
+    eiexp  go to state 142
+
+
+State 138
+
+   39 c_switch: SWITCH OP expression CP OB . switch_body CB
+
+    $default  reduce using rule 40 (switch_body)
+
+    switch_body  go to state 143
+
+
+State 139
+
+    8 fdeclaration: datatype identifier OP fparamlist CP .
+
+    $default  reduce using rule 8 (fdeclaration)
+
+
+State 140
+
+   37 for_loop: FOR OP exp_hack SEMICOLON exp_hack SEMICOLON . exp_hack CP statement
+
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    funcall             go to state 42
+    exp_hack            go to state 144
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 121
+    assign              go to state 122
+    pointer_expression  go to state 104
+
+
+State 141
+
+   25 eiexp: ELSE . statement
+
+    FOR         shift, and go to state 84
+    WHILE       shift, and go to state 85
+    IF          shift, and go to state 86
+    SWITCH      shift, and go to state 87
+    BREAK       shift, and go to state 88
+    RETURN      shift, and go to state 89
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OB          shift, and go to state 47
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    conditional         go to state 93
+    statement           go to state 145
+    block               go to state 95
+    iexp                go to state 96
+    funcall             go to state 42
+    loops               go to state 97
+    for_loop            go to state 98
+    while_loop          go to state 99
+    c_switch            go to state 100
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 102
+    assign              go to state 103
+    pointer_expression  go to state 104
+
+
+State 142
+
+   23 iexp: IF OP expression CP statement eiexp .
+
+    $default  reduce using rule 23 (iexp)
+
+
+State 143
+
+   39 c_switch: SWITCH OP expression CP OB switch_body . CB
+   41 switch_body: switch_body . CASE aconst COLON statement_list
+
+    CASE  shift, and go to state 146
+    CB    shift, and go to state 147
+
+
+State 144
+
+   37 for_loop: FOR OP exp_hack SEMICOLON exp_hack SEMICOLON exp_hack . CP statement
+
+    CP  shift, and go to state 148
+
+
+State 145
+
+   25 eiexp: ELSE statement .
+
+    $default  reduce using rule 25 (eiexp)
+
+
+State 146
+
+   41 switch_body: switch_body CASE . aconst COLON statement_list
+
+    NUMBER  shift, and go to state 23
+
+    aconst  go to state 149
+
+
+State 147
+
+   39 c_switch: SWITCH OP expression CP OB switch_body CB .
+
+    $default  reduce using rule 39 (c_switch)
+
+
+State 148
+
+   37 for_loop: FOR OP exp_hack SEMICOLON exp_hack SEMICOLON exp_hack CP . statement
+
+    FOR         shift, and go to state 84
+    WHILE       shift, and go to state 85
+    IF          shift, and go to state 86
+    SWITCH      shift, and go to state 87
+    BREAK       shift, and go to state 88
+    RETURN      shift, and go to state 89
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OB          shift, and go to state 47
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    MUL       [reduce using rule 47 (expression)]
+    $default  reduce using rule 47 (expression)
+
+    identifier          go to state 92
+    conditional         go to state 93
+    statement           go to state 150
+    block               go to state 95
+    iexp                go to state 96
+    funcall             go to state 42
+    loops               go to state 97
+    for_loop            go to state 98
+    while_loop          go to state 99
+    c_switch            go to state 100
+    aconst              go to state 25
+    constant            go to state 43
+    expression          go to state 102
+    assign              go to state 103
+    pointer_expression  go to state 104
+
+
+State 149
+
+   41 switch_body: switch_body CASE aconst . COLON statement_list
+
+    COLON  shift, and go to state 151
+
+
+State 150
+
+   37 for_loop: FOR OP exp_hack SEMICOLON exp_hack SEMICOLON exp_hack CP statement .
+
+    $default  reduce using rule 37 (for_loop)
+
+
+State 151
+
+   41 switch_body: switch_body CASE aconst COLON . statement_list
+
+    $default  reduce using rule 10 (statement_list)
+
+    statement_list  go to state 152
+
+
+State 152
+
+   11 statement_list: statement_list . statement
+   12               | statement_list . declarations SEMICOLON
+   41 switch_body: switch_body CASE aconst COLON statement_list .
+
+    INT         shift, and go to state 4
+    CHAR        shift, and go to state 5
+    FOR         shift, and go to state 84
+    WHILE       shift, and go to state 85
+    IF          shift, and go to state 86
+    SWITCH      shift, and go to state 87
+    BREAK       shift, and go to state 88
+    RETURN      shift, and go to state 89
+    IDENTIFIER  shift, and go to state 11
+    NUMBER      shift, and go to state 23
+    MUL         shift, and go to state 12
+    AMP         shift, and go to state 38
+    NOT         shift, and go to state 39
+    OB          shift, and go to state 47
+    OP          shift, and go to state 40
+    S_LIT       shift, and go to state 24
+
+    CASE      reduce using rule 41 (switch_body)
+    MUL       [reduce using rule 47 (expression)]
+    CB        reduce using rule 41 (switch_body)
+    $default  reduce using rule 47 (expression)
+
+    declarations        go to state 91
+    identifier          go to state 92
+    fdeclaration        go to state 7
+    conditional         go to state 93
+    statement           go to state 94
+    block               go to state 95
+    iexp                go to state 96
+    funcall             go to state 42
+    loops               go to state 97
+    for_loop            go to state 98
+    while_loop          go to state 99
+    c_switch            go to state 100
+    aconst              go to state 25
+    datatype            go to state 101
+    constant            go to state 43
+    expression          go to state 102
+    assign              go to state 103
+    pointer_expression  go to state 104
+    vdeclaration        go to state 10

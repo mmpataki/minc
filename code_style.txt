@@ -1,0 +1,26 @@
+
+To make this project successful please train yourself to be compatible with
+these coding-styles. This may not be so important but after a time you will not
+start to hate your own code.
+
+
+*	Use lower-case for the non-terminals, this makes them to be identified
+	by the programmer easily.
+
+*	Use upper-case for the terminals, this makes them distinct from the
+	other symbols.
+
+*	Don't use the string literals, operators, special characters,
+	delimiters in string form in the grammar specification(YACC) this makes
+	the rules to look crappy.
+
+*	Last but not the least, don't use shorthands.
+
+*	Spaces are not a replacement for tabs. Don't be so MicroSoftic to use
+	spaces instead for tabs
+
+*	Don't use the textwrapping property of your editor. Always keep your
+	line of code's length <= 80 chars this helps people using different
+	terminals to see wholle line at once.
+
+*	

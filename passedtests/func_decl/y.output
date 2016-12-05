@@ -1,0 +1,314 @@
+Grammar
+
+    0 $accept: program $end
+
+    1 program: program declaration
+    2        | %empty
+
+    3 declaration: type array_refs
+    4            | type ID '(' formal_params ')' ';'
+
+    5 formal_params: type ID
+    6              | type ID ',' formal_params
+    7              | declaration
+
+    8 array_refs: array_refs ',' array_ref
+    9           | array_ref
+
+   10 array_ref: ID pars
+
+   11 pars: '[' NUM ']'
+   12     | pars '[' NUM ']'
+
+   13 type: INT
+   14     | CHAR
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 4
+')' (41) 4
+',' (44) 6 8
+';' (59) 4
+'[' (91) 11 12
+']' (93) 11 12
+error (256)
+NUM (258) 11 12
+ID (259) 4 5 6 10
+INT (260) 13
+CHAR (261) 14
+
+
+Nonterminals, with rules where they appear
+
+$accept (13)
+    on left: 0
+program (14)
+    on left: 1 2, on right: 0 1
+declaration (15)
+    on left: 3 4, on right: 1 7
+formal_params (16)
+    on left: 5 6 7, on right: 4 6
+array_refs (17)
+    on left: 8 9, on right: 3 8
+array_ref (18)
+    on left: 10, on right: 8 9
+pars (19)
+    on left: 11 12, on right: 10 12
+type (20)
+    on left: 13 14, on right: 3 4 5 6
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 2 (program)
+
+    program  go to state 1
+
+
+State 1
+
+    0 $accept: program . $end
+    1 program: program . declaration
+
+    $end  shift, and go to state 2
+    INT   shift, and go to state 3
+    CHAR  shift, and go to state 4
+
+    declaration  go to state 5
+    type         go to state 6
+
+
+State 2
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 3
+
+   13 type: INT .
+
+    $default  reduce using rule 13 (type)
+
+
+State 4
+
+   14 type: CHAR .
+
+    $default  reduce using rule 14 (type)
+
+
+State 5
+
+    1 program: program declaration .
+
+    $default  reduce using rule 1 (program)
+
+
+State 6
+
+    3 declaration: type . array_refs
+    4            | type . ID '(' formal_params ')' ';'
+
+    ID  shift, and go to state 7
+
+    array_refs  go to state 8
+    array_ref   go to state 9
+
+
+State 7
+
+    4 declaration: type ID . '(' formal_params ')' ';'
+   10 array_ref: ID . pars
+
+    '('  shift, and go to state 10
+    '['  shift, and go to state 11
+
+    pars  go to state 12
+
+
+State 8
+
+    3 declaration: type array_refs .
+    8 array_refs: array_refs . ',' array_ref
+
+    ','  shift, and go to state 13
+
+    $default  reduce using rule 3 (declaration)
+
+
+State 9
+
+    9 array_refs: array_ref .
+
+    $default  reduce using rule 9 (array_refs)
+
+
+State 10
+
+    4 declaration: type ID '(' . formal_params ')' ';'
+
+    INT   shift, and go to state 3
+    CHAR  shift, and go to state 4
+
+    declaration    go to state 14
+    formal_params  go to state 15
+    type           go to state 16
+
+
+State 11
+
+   11 pars: '[' . NUM ']'
+
+    NUM  shift, and go to state 17
+
+
+State 12
+
+   10 array_ref: ID pars .
+   12 pars: pars . '[' NUM ']'
+
+    '['  shift, and go to state 18
+
+    $default  reduce using rule 10 (array_ref)
+
+
+State 13
+
+    8 array_refs: array_refs ',' . array_ref
+
+    ID  shift, and go to state 19
+
+    array_ref  go to state 20
+
+
+State 14
+
+    7 formal_params: declaration .
+
+    $default  reduce using rule 7 (formal_params)
+
+
+State 15
+
+    4 declaration: type ID '(' formal_params . ')' ';'
+
+    ')'  shift, and go to state 21
+
+
+State 16
+
+    3 declaration: type . array_refs
+    4            | type . ID '(' formal_params ')' ';'
+    5 formal_params: type . ID
+    6              | type . ID ',' formal_params
+
+    ID  shift, and go to state 22
+
+    array_refs  go to state 8
+    array_ref   go to state 9
+
+
+State 17
+
+   11 pars: '[' NUM . ']'
+
+    ']'  shift, and go to state 23
+
+
+State 18
+
+   12 pars: pars '[' . NUM ']'
+
+    NUM  shift, and go to state 24
+
+
+State 19
+
+   10 array_ref: ID . pars
+
+    '['  shift, and go to state 11
+
+    pars  go to state 12
+
+
+State 20
+
+    8 array_refs: array_refs ',' array_ref .
+
+    $default  reduce using rule 8 (array_refs)
+
+
+State 21
+
+    4 declaration: type ID '(' formal_params ')' . ';'
+
+    ';'  shift, and go to state 25
+
+
+State 22
+
+    4 declaration: type ID . '(' formal_params ')' ';'
+    5 formal_params: type ID .
+    6              | type ID . ',' formal_params
+   10 array_ref: ID . pars
+
+    '('  shift, and go to state 10
+    ','  shift, and go to state 26
+    '['  shift, and go to state 11
+
+    $default  reduce using rule 5 (formal_params)
+
+    pars  go to state 12
+
+
+State 23
+
+   11 pars: '[' NUM ']' .
+
+    $default  reduce using rule 11 (pars)
+
+
+State 24
+
+   12 pars: pars '[' NUM . ']'
+
+    ']'  shift, and go to state 27
+
+
+State 25
+
+    4 declaration: type ID '(' formal_params ')' ';' .
+
+    $default  reduce using rule 4 (declaration)
+
+
+State 26
+
+    6 formal_params: type ID ',' . formal_params
+
+    INT   shift, and go to state 3
+    CHAR  shift, and go to state 4
+
+    declaration    go to state 14
+    formal_params  go to state 28
+    type           go to state 16
+
+
+State 27
+
+   12 pars: pars '[' NUM ']' .
+
+    $default  reduce using rule 12 (pars)
+
+
+State 28
+
+    6 formal_params: type ID ',' formal_params .
+
+    $default  reduce using rule 6 (formal_params)
