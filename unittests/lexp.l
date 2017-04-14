@@ -19,7 +19,7 @@ extern char *new_cstr(char *str);
 			val = new_cstr(yytext);
 			return ID;
 		}
-[\[\],();]	{ ECHO; return *yytext; }
+[\[\],();+*=]	{ ECHO; return *yytext; }
 .		{ ECHO; }
 %%
 

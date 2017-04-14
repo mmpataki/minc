@@ -1,3 +1,5 @@
+#include "codgen.h"
+
 struct Node *stk[100];
 int st = -1;
 
@@ -11,9 +13,9 @@ int pop() {
 	return st+1;
 }
 
-int genl() {
+int genl(char *lab) {
 	static int lno=0;
-	return lno++;
+	sprintf(lab, "temp%d", lno++);
 }
 
 int codg(char oper) {
@@ -23,7 +25,6 @@ int codg(char oper) {
 	struct Node *res  = NULL;
 
 	char lab[10], args1[10], args2[10];
-
 
 	if(arg2->type == typeCon) sprintf(args2, "%lld", arg2->con.val);
 	else			  sprintf(args2, "%s", arg2->var.name);
@@ -37,7 +38,7 @@ int codg(char oper) {
 		fprintf(stderr, "%s \t = \t %s\n", args1, args2);
 	}
 	else {
-		sprintf(lab, "temp%d", genl());
+		genl(lab);
 		res = create_var(lab, vNull, NULL);
 		fprintf(stderr, "%s \t = \t %s \t %c \t %s\n", lab, args1, oper, args2);
 	}

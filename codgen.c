@@ -88,7 +88,7 @@ int make_var_ready(struct Node *n, int required_pos, int reg) {
 	case typeCon:
 	case typeScon:
 		reg = get_a_reg(ANYREG);
-		printf("\t movl \t %%%s \t $%s\n", regnames[reg], n->con.strVal);
+		printf("\t movl \t %%%s, \t $%s\n", regnames[reg], n->con.strVal);
 		break;
 	case typeVar:
 		switch(required_pos) {
@@ -127,7 +127,7 @@ int get_a_reg(int regno) {
 	if(!regs[regno]) return regno;
 	if(regs[regno]->dirty) {
 		/* write it back */
-		printf("\t movl \t %d(%%rbp) \t %%%s\n", regs[regno]->sfof, regnames[regno]);
+		printf("\t movl \t %d(%%rbp), \t %%%s\n", regs[regno]->sfof, regnames[regno]);
 	}
 	return regno;
 }

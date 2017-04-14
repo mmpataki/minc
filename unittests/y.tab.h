@@ -66,7 +66,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 16 "temp.y" /* yacc.c:1909  */
+#line 23 "temp.y" /* yacc.c:1909  */
 
 	int oper;
 	struct Node *nPtr;
